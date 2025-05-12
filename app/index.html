@@ -1,20 +1,25 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Add Numbers</title>
+  <meta charset="UTF-8">
+  <title>Addition App</title>
+</head>
+<body>
+  <h1>Addition App</h1>
+
+  <input id="a" type="number" placeholder="Enter a">
+  <input id="b" type="number" placeholder="Enter b">
+  <button onclick="add()">Add</button>
+
+  <p id="result"></p>
+
   <script>
     function add() {
       const a = parseInt(document.getElementById('a').value);
       const b = parseInt(document.getElementById('b').value);
-      document.getElementById('result').textContent = a + b;
+      const sum = a + b;
+      document.getElementById('result').textContent = 'Result: ' + sum;
     }
   </script>
-</head>
-<body>
-  <h1>Simple Adder</h1>
-  <input id="a" type="number" placeholder="Enter a" />
-  <input id="b" type="number" placeholder="Enter b" />
-  <button onclick="add()">Add</button>
-  <p id="result"></p>
 </body>
 </html>
