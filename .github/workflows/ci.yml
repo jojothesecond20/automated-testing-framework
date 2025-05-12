@@ -2,9 +2,9 @@ name: Run All Tests
 
 on:
   push:
-    branches: [master]
+    branches: [main]  # Use 'main' if that's your default branch
   pull_request:
-    branches: [master]
+    branches: [main]
 
 jobs:
   test:
@@ -26,34 +26,36 @@ jobs:
           bash -c "cd /app && pip install -r requirements.txt && python app/api.py"
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '18'
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
 
-    - name: Install Cypress & Newman
-      run: |
-        npm install
-        npm install -g newman
+      - name: Install Cypress & Newman
+        run: |
+          npm install
+          npm install -g newman
 
-    - name: Run Unit Tests with pytest
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.10'
-    - run: |
-        pip install -r requirements.txt
-        pytest
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
 
-    - name: Run API Tests with Newman
-      run: |
-        newman run api-tests.postman_collection.json
+      - name: Run Unit Tests with PyTest
+        run: |
+          pip install -r requirements.txt
+          pytest
 
-    - name: Run Cypress E2E Tests
-      uses: cypress-io/github-action@v6
-      with:
-        start: npx serve app -l 5500
-        wait-on: 'http://localhost:5500/index.html'
-        wait-on-timeout: 60
+      - name: Run API Tests with Newman
+        run: |
+          newman run api-tests.postman_collection.json
+
+      - name: Run Cypress E2E Tests
+        uses: cypress-io/github-action@v6
+        with:
+          start: npx serve app -l 5500
+          wait-on: 'http://localhost:5500/index.html'
+          wait-on-timeout: 60
