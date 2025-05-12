@@ -1,0 +1,61 @@
+{
+	"info": {
+		"_postman_id": "68f3291a-8c46-4e60-a11f-5f98f5bf1f49",
+		"name": "New Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "44883888",
+		"_collection_link": "https://jojo-6803734.postman.co/workspace/jojo's-Workspace~8a783022-9af8-459f-8184-a3b0eefd6d3b/collection/44883888-68f3291a-8c46-4e60-a11f-5f98f5bf1f49?action=share&source=collection_link&creator=44883888"
+	},
+	"item": [
+		{
+			"name": "API Demo Collection",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Addition result is correct\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.result).to.eql(5);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/add?a=2&b=3\n",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"add"
+					],
+					"query": [
+						{
+							"key": "a",
+							"value": "2"
+						},
+						{
+							"key": "b",
+							"value": "3\n"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
