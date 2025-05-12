@@ -11,10 +11,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
+      - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Set up Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 18
@@ -22,13 +22,13 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Install serve package
-        run: npm install -g serve
+      - name: Install serve and wait-on
+        run: npm install -g serve wait-on
 
-      - name: Start local server
+      - name: Start local server and wait
         run: |
-          npx serve app -l 5500 &
-          sleep 5 # wait for server to boot
+          npx serve app -l 5500 &         # Serve static HTML from app/
+          npx wait-on http://localhost:5500
 
       - name: Run Cypress tests
         run: npx cypress run
