@@ -10,52 +10,45 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
-    services:
-      flask:
-        image: python:3.10
-        ports:
-          - 5000:5000
-        options: >-
-          --health-cmd="curl --fail http://localhost:5000/api/add?a=1&b=1 || exit 1"
-          --health-interval=5s
-          --health-timeout=5s
-          --health-retries=5
-        volumes:
-          - .:/app
-        entrypoint: >
-          bash -c "cd /app && pip install -r requirements.txt && python app/api.py"
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+    - name: Checkout code
+      uses: actions/checkout@v3
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
 
-      - name: Install Cypress & Newman
-        run: |
-          npm install
-          npm install -g newman
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.10'
+    - name: Start Flask app in background
+      run: |
+        python app/api.py &
+        sleep 5
 
-      - name: Run Unit Tests with PyTest
-        run: |
-          pip install -r requirements.txt
-          pytest
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
 
-      - name: Run API Tests with Newman
-        run: |
-          newman run api-tests.postman_collection.json
+    - name: Install Cypress & Newman
+      run: |
+        npm install
+        npm install -g newman
 
-      - name: Run Cypress E2E Tests
-        uses: cypress-io/github-action@v6
-        with:
-          start: npx serve app -l 5500
-          wait-on: 'http://localhost:5500/index.html'
-          wait-on-timeout: 60
+    - name: Run Unit Tests with PyTest
+      run: |
+        pytest
+
+    - name: Run API Tests with Newman
+      run: |
+        newman run api-tests.postman_collection.json
+
+    - name: Run Cypress E2E Tests
+      uses: cypress-io/github-action@v6
+      with:
+        start: npx serve app -l 5500
+        wait-on: 'http://localhost:5500/index.html'
+        wait-on-timeout: 60
