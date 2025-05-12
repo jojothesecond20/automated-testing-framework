@@ -2,7 +2,7 @@ name: Run All Tests
 
 on:
   push:
-    branches: [main]  # Use 'main' if that's your default branch
+    branches: [main]
   pull_request:
     branches: [main]
 
@@ -22,7 +22,7 @@ jobs:
           --health-retries=5
         volumes:
           - .:/app
-        command: >
+        entrypoint: >
           bash -c "cd /app && pip install -r requirements.txt && python app/api.py"
 
     steps:
