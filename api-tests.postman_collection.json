@@ -1,0 +1,27 @@
+{
+  "info": {
+    "name": "API Tests",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Test Add API",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5000/api/add?a=5&b=8",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "add"],
+          "query": [
+            { "key": "a", "value": "5" },
+            { "key": "b", "value": "8" }
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
