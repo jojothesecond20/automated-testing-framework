@@ -1,23 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Adder</title>
-</head>
-<body>
-  <h1>Simple Addition</h1>
-
-  <input id="a" type="number" placeholder="Enter a">
-  <input id="b" type="number" placeholder="Enter b">
-  <button onclick="add()">Add</button>
-
-  <p id="result"></p>
-
+  <title>Add Numbers</title>
   <script>
     function add() {
-      const a = parseFloat(document.getElementById('a').value);
-      const b = parseFloat(document.getElementById('b').value);
-      document.getElementById('result').textContent = `Result: ${a + b}`;
+      const a = parseInt(document.getElementById('a').value);
+      const b = parseInt(document.getElementById('b').value);
+      document.getElementById('result').textContent = a + b;
     }
   </script>
+</head>
+<body>
+  <h1>Simple Adder</h1>
+  <input id="a" type="number" placeholder="Enter a" />
+  <input id="b" type="number" placeholder="Enter b" />
+  <button onclick="add()">Add</button>
+  <p id="result"></p>
 </body>
 </html>
