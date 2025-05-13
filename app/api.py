@@ -8,5 +8,7 @@ def add():
     b = int(request.args.get('b', 0))
     return jsonify({'result': a + b})
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+if __name__ == "__main__":
+    print("🚀 Flask server starting...")
+    app.run(debug=True, host="0.0.0.0", port=5000)
+
