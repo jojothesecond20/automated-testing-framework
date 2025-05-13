@@ -1,0 +1,24 @@
+version: '3'
+services:
+  postgres:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: pactuser
+      POSTGRES_PASSWORD: pactpass
+      POSTGRES_DB: pactbroker
+    ports:
+      - "5432:5432"
+
+  pact-broker:
+    image: pactfoundation/pact-broker:2
+    environment:
+      PACT_BROKER_DATABASE_USERNAME: pactuser
+      PACT_BROKER_DATABASE_PASSWORD: pactpass
+      PACT_BROKER_DATABASE_NAME: pactbroker
+      PACT_BROKER_DATABASE_HOST: postgres
+      PACT_BROKER_DATABASE_CONNECT_MAX_RETRIES: "10"
+    depends_on:
+      - postgres
+    ports:
+      - "9292:9292"
+    restart: always
