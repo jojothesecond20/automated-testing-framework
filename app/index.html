@@ -1,25 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Addition App</title>
+  <meta charset="UTF-8" />
+  <title>Calculator</title>
 </head>
 <body>
-  <h1>Addition App</h1>
-
-  <input id="a" type="number" placeholder="Enter a">
-  <input id="b" type="number" placeholder="Enter b">
-  <button onclick="add()">Add</button>
-
-  <p id="result"></p>
+  <input type="text" id="num1" />
+  <input type="text" id="num2" />
+  <button id="addBtn">Add</button>
+  <div id="result"></div>
 
   <script>
-    function add() {
-      const a = parseInt(document.getElementById('a').value);
-      const b = parseInt(document.getElementById('b').value);
-      const sum = a + b;
-      document.getElementById('result').textContent = 'Result: ' + sum;
-    }
+    document.getElementById('addBtn').addEventListener('click', function () {
+      const num1 = parseFloat(document.getElementById('num1').value);
+      const num2 = parseFloat(document.getElementById('num2').value);
+      const sum = num1 + num2;
+      document.getElementById('result').textContent = sum;
+    });
   </script>
 </body>
 </html>

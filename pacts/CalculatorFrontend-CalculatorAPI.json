@@ -1,0 +1,51 @@
+{
+  "consumer": {
+    "name": "CalculatorFrontend"
+  },
+  "interactions": [
+    {
+      "description": "a request to add 2 numbers",
+      "providerState": "calculator can add numbers",
+      "request": {
+        "body": {
+          "a": 5,
+          "b": 3
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "method": "POST",
+        "path": "/add"
+      },
+      "response": {
+        "body": {
+          "result": 8
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "matchingRules": {
+          "$.body.result": {
+            "match": "type"
+          }
+        },
+        "status": 200
+      }
+    }
+  ],
+  "metadata": {
+    "pact-js": {
+      "version": "15.0.1"
+    },
+    "pactRust": {
+      "ffi": "0.4.22",
+      "models": "1.2.3"
+    },
+    "pactSpecification": {
+      "version": "2.0.0"
+    }
+  },
+  "provider": {
+    "name": "CalculatorAPI"
+  }
+}
