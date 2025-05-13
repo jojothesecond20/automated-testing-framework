@@ -20,18 +20,18 @@ jobs:
           node-version: 18
 
       - name: Install Node.js dependencies
-        run: npm install
+        run: npm ci
 
       - name: Start frontend server
         run: |
-          npx serve demo-testing-framework/app -l 5500 &
+          npm run start &
           npx wait-on http://localhost:5500
 
       - name: Run Cypress E2E tests
         uses: cypress-io/github-action@v6
         with:
-          start: npm start
           wait-on: 'http://localhost:5500'
+          start: npm run start
           command: npx cypress run
 
       - name: Set up Python
@@ -47,7 +47,6 @@ jobs:
       - name: Start Flask API server
         run: |
           nohup python app/api.py --host=0.0.0.0 &
-          sleep 10
 
       - name: Wait for Flask API
         run: |
@@ -67,4 +66,5 @@ jobs:
         run: npm run test:verify
 
       - name: Run Python unit tests
-        run: pytest demo-testing-framework/tests/test_calculator.py
+        run: |
+          pytest demo-testing-framework/tests/test_calculator.py
