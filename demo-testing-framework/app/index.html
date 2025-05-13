@@ -1,26 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>Add Numbers</title>
-</head>
-<body>
-  <h1>Add Two Numbers</h1>
-  <input id="a" type="number" placeholder="Enter first number" />
-  <input id="b" type="number" placeholder="Enter second number" />
-  <button onclick="sendAdd()">Add</button>
-  <p id="result"></p>
+<html>
+  <head>
+    <title>Adder</title>
+  </head>
+  <body>
+    <input type="number" id="num1" />
+    <input type="number" id="num2" />
+    <button id="addBtn">Add</button>
+    <div id="result"></div>
 
-  <script>
-    function sendAdd() {
-      const a = document.getElementById('a').value;
-      const b = document.getElementById('b').value;
-      fetch(`http://localhost:5000/api/add?a=${a}&b=${b}`)
-        .then(res => res.json())
-        .then(data => {
-          document.getElementById('result').innerText = 'Result: ' + data.result;
-        });
-    }
-  </script>
-</body>
+    <script>
+      document.getElementById('addBtn').addEventListener('click', () => {
+        const a = parseFloat(document.getElementById('num1').value);
+        const b = parseFloat(document.getElementById('num2').value);
+        document.getElementById('result').textContent = a + b;
+      });
+    </script>
+  </body>
 </html>
