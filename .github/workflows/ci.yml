@@ -14,22 +14,6 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v3
 
-      # 🐍 Set up Python for unit tests
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.10'
-
-      - name: Install Python dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-
-      - name: Run Python unit tests
-        run: |
-          pytest demo-testing-framework/app/tests/test_calculator.py
-
-      # 🟢 Node.js + Cypress tests
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
@@ -57,3 +41,17 @@ jobs:
 
       - name: Run contract verification (provider)
         run: npm run test:verify
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run Python unit tests
+        run: |
+          pytest demo-testing-framework/tests
