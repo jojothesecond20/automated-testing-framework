@@ -4,6 +4,7 @@
   "description": "CI/CD testing with Cypress, Pact, and Pytest",
   "main": "index.js",
   "scripts": {
+    "start": "serve demo-testing-framework/app -l 5500",
     "test:contract": "jest test/consumer.test.js",
     "test:verify": "pact-provider-verifier --provider-base-url=http://localhost:5000 --pact-urls=./pacts/consumer-provider.json"
   },
