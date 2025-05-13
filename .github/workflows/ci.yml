@@ -19,25 +19,32 @@ jobs:
         with:
           node-version: 18
 
-      - name: Install dependencies
-        run: npm ci
+      - name: Install Node.js dependencies
+        run: npm install
 
       - name: Install serve and wait-on
         run: npm install -g serve wait-on
 
-      - name: Start local UI server
+      - name: Start frontend server
         run: |
-          npx serve demo-testing-framework/app -l 5500 &  # UI for Cypress
+          npx serve demo-testing-framework/app -l 5500 &
           npx wait-on http://localhost:5500
-
-      - name: Start Flask API server
-        run: |
-          pip install -r requirements.txt
-          python demo-testing-framework/app/api.py &
-          npx wait-on http://localhost:5000
 
       - name: Run Cypress tests
         run: npx cypress run
+
+      - name: Start Flask API server (background)
+        run: |
+          pip install -r requirements.txt
+          nohup python app/api.py &
+
+      - name: Wait for Flask API to be ready
+        run: |
+          sudo apt-get install -y curl
+          until curl --output /dev/null --silent --head --fail http://127.0.0.1:5000/api/health; do
+            echo "Waiting for Flask API to start..."
+            sleep 3
+          done
 
       - name: Run API tests (Postman/Newman)
         run: npx newman run api-tests.postman_collection.json
@@ -50,7 +57,7 @@ jobs:
 
       - name: Run Python unit tests
         run: |
-          python -m venv venv
+          python3 -m venv venv
           source venv/bin/activate
           pip install -r requirements.txt
           pytest demo-testing-framework/tests/test_calculator.py
