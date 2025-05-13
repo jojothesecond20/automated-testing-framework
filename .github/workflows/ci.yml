@@ -31,7 +31,9 @@ jobs:
           npx wait-on http://localhost:5500
 
       - name: Run Cypress tests
-        run: npx cypress run
+        run: | 
+          chmod +x ./node-modules/.bin/cypress
+          npx cypress run
 
       - name: Start Flask API server (background)
         run: |
