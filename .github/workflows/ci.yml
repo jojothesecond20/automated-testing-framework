@@ -1,4 +1,4 @@
-name: Cypress Tests
+name: Full Test Suite
 
 on:
   push:
@@ -19,11 +19,27 @@ jobs:
         with:
           node-version: 18
 
-      - name: Install Node.js dependencies
-        run: npm install
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
 
-      - name: Install serve and wait-on
-        run: npm install -g serve wait-on
+      - name: Cache Cypress binary
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/Cypress
+          key: cypress-cache-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            cypress-cache-${{ runner.os }}-
+
+      - name: Install Node.js dependencies
+        run: npm ci
+
+      - name: Install Cypress binary
+        run: npx cypress install
+
+      - name: Install global CLI tools
+        run: npm install -g serve wait-on newman
 
       - name: Start frontend server
         run: |
@@ -31,30 +47,28 @@ jobs:
           npx wait-on http://localhost:5500
 
       - name: Run Cypress tests
-        run: | 
-          chmod +x ./node_modules/.bin/cypress
-          npx cypress run
+        run: npx cypress run
 
-      - name: Start Flask API server (background)
+      - name: Set up and start Flask API (background)
         run: |
           pip install -r requirements.txt
           nohup python app/api.py &
 
-      - name: Wait for Flask API to be ready
+      - name: Wait for Flask API
         run: |
           sudo apt-get update && sudo apt-get install -y curl
           until curl --output /dev/null --silent --head --fail http://127.0.0.1:5000/api/health; do
-            echo "Waiting for Flask API to start..."
+            echo "⏳ Waiting for Flask API to be ready..."
             sleep 3
           done
 
-      - name: Run API tests (Postman/Newman)
-        run: npx newman run api-tests.postman_collection.json
+      - name: Run Postman API tests with Newman
+        run: newman run api-tests.postman_collection.json
 
-      - name: Run contract tests (consumer)
+      - name: Run Pact contract tests (consumer)
         run: npm run test:contract
 
-      - name: Run contract verification (provider)
+      - name: Run Pact contract verification (provider)
         run: npm run test:verify
 
       - name: Run Python unit tests
