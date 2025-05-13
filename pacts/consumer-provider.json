@@ -1,0 +1,34 @@
+{
+  "consumer": { "name": "Consumer" },
+  "provider": { "name": "Provider" },
+  "interactions": [
+    {
+      "description": "a request to calculate sum",
+      "request": {
+        "method": "POST",
+        "path": "/api/sum",
+        "body": {
+          "a": 5,
+          "b": 3
+        },
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "body": {
+          "result": 8
+        }
+      }
+    }
+  ],
+  "metadata": {
+    "pactSpecification": {
+      "version": "2.0.0"
+    }
+  }
+}

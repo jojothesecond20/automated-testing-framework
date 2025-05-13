@@ -1,1 +1,30 @@
-node_modules
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+env/
+venv/
+.Python
+.pytest_cache/
+.pyre/
+.mypy_cache/
+
+# Node
+node_modules/
+.nyc_output/
+dist/
+coverage/
+cypress/screenshots/
+cypress/videos/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

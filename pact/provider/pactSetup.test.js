@@ -1,17 +1,15 @@
-const path = require("path");
-const { Verifier } = require("@pact-foundation/pact");
+const path = require('path');
+const { Verifier } = require('@pact-foundation/pact');
 
-describe("Pact Verification", () => {
-  it("validates the expectations of CalculatorFrontend", async () => {
+describe('Pact Verification', () => {
+  it('validates the expectations of the consumer', async () => {
     const opts = {
-      provider: "CalculatorBackend",
-      providerBaseUrl: "http://localhost:3000",
-      pactUrls: [path.resolve(__dirname, '../../pacts/CalculatorFrontend-CalculatorAPI.json')],
-      publishVerificationResult: true,
-      providerVersion: "1.0.0"
+      provider: 'Provider',
+      providerBaseUrl: 'http://localhost:60705', // <-- Make sure this is set
+      pactUrls: [path.resolve(__dirname, '../../pacts/consumer-provider.json')],
+      logLevel: 'info',
     };
 
-    const output = await new Verifier(opts).verifyProvider();
-    console.log("✅ Pact Verification Complete:\n", output);
+    await new Verifier(opts).verifyProvider();
   });
 });
