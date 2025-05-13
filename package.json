@@ -1,11 +1,11 @@
 {
   "name": "automated-testing-framework",
   "version": "1.0.0",
-  "description": "",
+  "description": "CI/CD testing with Cypress, Pact, and Pytest",
   "main": "index.js",
   "scripts": {
-    "test:contract": "jest pact/consumer/consumer.test.js",
-    "test:verify": "jest pact/provider/pactSetup.test.js"
+    "test:contract": "jest test/consumer.test.js",
+    "test:verify": "pact-provider-verifier --provider-base-url=http://localhost:5000 --pact-urls=./pacts/consumer-provider.json"
   },
   "keywords": [],
   "author": "",
@@ -13,7 +13,7 @@
   "devDependencies": {
     "@pact-foundation/pact": "^15.0.1",
     "cypress": "^14.3.3",
-    "jest": "^29.0.0",
+    "jest": "^29.7.0",
     "serve": "^14.2.4",
     "wait-on": "^8.0.3"
   }
